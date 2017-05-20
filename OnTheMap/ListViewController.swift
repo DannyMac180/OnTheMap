@@ -8,9 +8,11 @@
 
 import UIKit
 
-class ListViewController: UIViewController, UITableViewDelegate {
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    
+    var studentLocations: [StudentLocation] = [StudentLocation]()
     
     
     @IBAction func addPin(_ sender: Any) {

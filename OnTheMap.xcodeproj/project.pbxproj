@@ -18,6 +18,7 @@
 		3045886B1EC9CE5700B79460 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045886A1EC9CE5700B79460 /* Constants.swift */; };
 		3045886D1EC9D3FA00B79460 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3045886C1EC9D3FA00B79460 /* UdacityClient.swift */; };
 		3087BA521ECD3449009D85F0 /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3087BA511ECD3449009D85F0 /* StudentLocation.swift */; };
+		3087BA541ED0BD93009D85F0 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3087BA531ED0BD93009D85F0 /* ParseClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		3045886A1EC9CE5700B79460 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3045886C1EC9D3FA00B79460 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		3087BA511ECD3449009D85F0 /* StudentLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
+		3087BA531ED0BD93009D85F0 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 			children = (
 				3045886A1EC9CE5700B79460 /* Constants.swift */,
 				3045886C1EC9D3FA00B79460 /* UdacityClient.swift */,
+				3087BA531ED0BD93009D85F0 /* ParseClient.swift */,
 				3087BA511ECD3449009D85F0 /* StudentLocation.swift */,
 			);
 			name = Models;
@@ -179,6 +182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3087BA541ED0BD93009D85F0 /* ParseClient.swift in Sources */,
 				3087BA521ECD3449009D85F0 /* StudentLocation.swift in Sources */,
 				304588631EC2752900B79460 /* MapKitViewController.swift in Sources */,
 				3015BC0E1EC1584700BEA550 /* LoginViewController.swift in Sources */,

@@ -112,6 +112,10 @@
                                         </navigationItem>
                                     </items>
                                 </navigationBar>
+                                <connections>
+                                    <outlet property="dataSource" destination="zjH-dU-J6G" id="bNC-2o-ahP"/>
+                                    <outlet property="delegate" destination="zjH-dU-J6G" id="hET-Zu-4tn"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
