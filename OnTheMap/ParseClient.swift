@@ -19,20 +19,29 @@ class ParseClient {
         return Singleton.sharedInstance
     }
     
-    func taskForParseRequest(requestType: String, optionalParameters: [String: AnyObject], completionHandlerForParseRequest: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForParseRequest(requestType: String, optionalParameters: [String: AnyObject], addContentType: Bool, httpBody: Data?, completionHandlerForParseRequest: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: parseURLFromParameters(optionalParameters, withPathExtension: Constants.Parse.Methods.studentLocation))
         request.httpMethod = requestType
         request.addValue(Constants.Parse.HeaderValues.appId, forHTTPHeaderField: Constants.Parse.HeaderKeys.appId)
         request.addValue(Constants.Parse.HeaderValues.apiKey, forHTTPHeaderField: Constants.Parse.HeaderKeys.apiKey)
         
+        if let httpBody = httpBody {
+            request.httpBody = try! JSONSerialization.data(withJSONObject: httpBody, options: JSONSerialization.WritingOptions())
+        }
+        
+        if addContentType {
+            request.addValue(Constants.Parse.HeaderValues.application_json, forHTTPHeaderField: Constants.Parse.HeaderKeys.content_type)
+        }
+        
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            print(request)
             
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
                 completionHandlerForParseRequest(nil, NSError(domain: "taskForParseRequest", code: 1, userInfo: userInfo))
-                print(request)
             }
             
             guard (error == nil) else {
@@ -65,7 +74,7 @@ class ParseClient {
         
         let parameters = [Constants.Parse.ParameterKeys.limit: Constants.Parse.ParamterValues.hundred]
         
-        let _ = taskForParseRequest(requestType: Constants.Parse.HTTPMethods.get, optionalParameters: parameters as [String : AnyObject])  { (result, error) in
+        let _ = taskForParseRequest(requestType: Constants.Parse.HTTPMethods.get, optionalParameters: parameters as [String : AnyObject], addContentType: false, httpBody: nil)  { (result, error) in
             
             guard (error == nil) else {
                 completionHandlerForMultipleStudentLocations(nil, error)
@@ -78,6 +87,61 @@ class ParseClient {
                 completionHandlerForMultipleStudentLocations(studentLocations, nil)
             } else {
                 completionHandlerForMultipleStudentLocations(nil, NSError(domain: "getMultipleStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMultipleStudentLocations"]))
+            }
+        }
+    }
+    
+    func getSingleStudentLocation(uniqueKey: String, completionHandlerForSingleStudentLocation: @escaping (_ studentLocation: StudentLocation?, _ error: NSError?) -> Void) {
+        
+        let parameters = ["\(Constants.Parse.ParameterKeys.Where)": "{\"\(Constants.Parse.ParameterKeys.uniqueKey)\":\"" + "\(uniqueKey)" + "\"}"]
+        
+        let _ = taskForParseRequest(requestType: Constants.Parse.HTTPMethods.get, optionalParameters: parameters as [String: AnyObject], addContentType: false, httpBody: nil) { (result, error) in
+            
+            guard (error == nil) else {
+                completionHandlerForSingleStudentLocation(nil, error)
+                return
+            }
+            
+            if let results = result?[Constants.Parse.JSONResponseKeys.results] as? [[String: AnyObject]] {
+                
+                if results.count == 1 {
+                    let studentLocation = StudentLocation.studentLocationsFromResults(results)
+                    completionHandlerForSingleStudentLocation(studentLocation[0], nil)
+                } else if results.count > 1 {
+                    print("There is more than one user with this 'Unique Key'")
+                } else {
+                    completionHandlerForSingleStudentLocation(nil, NSError(domain: "getSingleStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getSingleStudentLocation"]))
+                }
+            }
+        }
+    }
+    
+    func postStudentLocation(uniqueKey: String, firstName: String, lastName: String, mapString: String, mediaUrl: String, latitude: Double, longitude: Double, completionHandlerForPostStudentLocation: @escaping (_ success: Bool?, _ error: NSError?) -> Void) {
+        
+        let parameters = [String: AnyObject]()
+        
+        let httpBody: [String: AnyObject] = [Constants.Parse.StudentLocKeys.uniqueKey: uniqueKey as AnyObject,
+                          Constants.Parse.StudentLocKeys.firstName: firstName as AnyObject,
+                          Constants.Parse.StudentLocKeys.lastName: lastName as AnyObject,
+                          Constants.Parse.StudentLocKeys.mapString: mapString as AnyObject,
+                          Constants.Parse.StudentLocKeys.mediaURL: mediaUrl as AnyObject,
+                          Constants.Parse.StudentLocKeys.latitude: latitude as AnyObject,
+                          Constants.Parse.StudentLocKeys.longitude: longitude as AnyObject]
+        
+        let _ = taskForParseRequest(requestType: Constants.Parse.HTTPMethods.post, optionalParameters: parameters, addContentType: true, httpBody: httpBody) { (result, error) in
+            
+            guard (error == nil) else {
+                completionHandlerForPostStudentLocation(false, error)
+                return
+            }
+            
+            if let results = result?[Constants.Parse.JSONResponseKeys.results] as? [[String: AnyObject]] {
+                
+                if !results.isEmpty {
+                    completionHandlerForPostStudentLocation(true, nil)
+                } else {
+                    completionHandlerForPostStudentLocation(false, NSError(domain: "postStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postStudentLocation"]))
+                }
             }
         }
     }

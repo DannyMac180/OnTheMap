@@ -15,7 +15,16 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextfield: UITextField!
     @IBOutlet var loginButton: UIButton!
     
+    var studentLocations = [StudentLocation]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        ParseClient.sharedInstance().postStudentLocation(uniqueKey: "1234", firstName: "John", lastName: "Doe", mapString: "Anytown, USA", mediaUrl: "google.com", latitude: 0.00, longitude: 0.00) { (success, error) in
+            if let success = success {
+                print(success)
+            } else {
+                print(error)
+            }
+        }
     }
 }
