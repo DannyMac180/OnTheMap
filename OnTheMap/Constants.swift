@@ -60,6 +60,7 @@ struct Constants {
             static let latitude = "latitude"
             static let longitude = "longitude"
             static let createdAt = "createdAt"
+            static let updatedAt = "updatedAt"
         }
         
         struct StudentLocKeys {
