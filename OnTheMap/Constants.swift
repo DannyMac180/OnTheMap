@@ -59,6 +59,7 @@ struct Constants {
             static let mediaURL = "mediaURL"
             static let latitude = "latitude"
             static let longitude = "longitude"
+            static let createdAt = "createdAt"
         }
         
         struct StudentLocKeys {
