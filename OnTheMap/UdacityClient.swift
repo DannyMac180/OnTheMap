@@ -7,8 +7,18 @@
 //
 
 import Foundation
-import UIKit
 
 class UdacityClient: NSObject {
+    
+    var session = URLSession.shared
+    
+    class func sharedInstance() -> UdacityClient {
+        struct Singleton {
+            static var sharedInstance = UdacityClient()
+        }
+        return Singleton.sharedInstance
+    }
+    
+    func taskForUdacityRequest()
     
 }

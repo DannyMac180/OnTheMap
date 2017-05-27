@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ParseClient {
+class ParseClient: NSObject {
     
     var session = URLSession.shared
     
@@ -21,17 +21,17 @@ class ParseClient {
     
     func taskForParseRequest(requestType: String, optionalParameters: [String: AnyObject], pathExtension: String?, addContentType: Bool, httpBody: String?, completionHandlerForParseRequest: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
-        let request = NSMutableURLRequest(url: parseURLFromParameters(optionalParameters, method: Constants.Parse.Methods.studentLocation, withPathExtension: pathExtension))
+        let request = NSMutableURLRequest(url: parseURLFromParameters(optionalParameters, method: Constants.Methods.studentLocation, withPathExtension: pathExtension))
         request.httpMethod = requestType
-        request.addValue(Constants.Parse.HeaderValues.appId, forHTTPHeaderField: Constants.Parse.HeaderKeys.appId)
-        request.addValue(Constants.Parse.HeaderValues.apiKey, forHTTPHeaderField: Constants.Parse.HeaderKeys.apiKey)
+        request.addValue(Constants.HeaderValues.appId, forHTTPHeaderField: Constants.HeaderKeys.appId)
+        request.addValue(Constants.HeaderValues.apiKey, forHTTPHeaderField: Constants.HeaderKeys.apiKey)
         
         if let httpBody = httpBody {
             request.httpBody = httpBody.data(using: String.Encoding.utf8)
         }
         
         if addContentType {
-            request.addValue(Constants.Parse.HeaderValues.application_json, forHTTPHeaderField: Constants.Parse.HeaderKeys.content_type)
+            request.addValue(Constants.HeaderValues.application_json, forHTTPHeaderField: Constants.HeaderKeys.content_type)
         }
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
@@ -72,16 +72,16 @@ class ParseClient {
     
     func getMutlipleStudentLocations(_ completionHandlerForMultipleStudentLocations: @escaping (_ studentLocations: [StudentLocation]?, _ error: NSError?) -> Void) {
         
-        let parameters = [Constants.Parse.ParameterKeys.limit: Constants.Parse.ParamterValues.hundred]
+        let parameters = [Constants.ParameterKeys.limit: Constants.ParamterValues.hundred]
         
-        let _ = taskForParseRequest(requestType: Constants.Parse.HTTPMethods.get, optionalParameters: parameters as [String : AnyObject], pathExtension: nil, addContentType: false, httpBody: nil)  { (result, error) in
+        let _ = taskForParseRequest(requestType: Constants.HTTPMethods.get, optionalParameters: parameters as [String : AnyObject], pathExtension: nil, addContentType: false, httpBody: nil)  { (result, error) in
             
             guard (error == nil) else {
                 completionHandlerForMultipleStudentLocations(nil, error)
                 return
             }
             
-            if let results = result?[Constants.Parse.JSONResponseKeys.results] as? [[String: AnyObject]] {
+            if let results = result?[Constants.JSONResponseKeys.results] as? [[String: AnyObject]] {
                 
                 let studentLocations = StudentLocation.studentLocationsFromResults(results)
                 completionHandlerForMultipleStudentLocations(studentLocations, nil)
@@ -93,16 +93,16 @@ class ParseClient {
     
     func getSingleStudentLocation(uniqueKey: String, completionHandlerForSingleStudentLocation: @escaping (_ studentLocation: StudentLocation?, _ error: NSError?) -> Void) {
         
-        let parameters = ["\(Constants.Parse.ParameterKeys.Where)": "{\"\(Constants.Parse.ParameterKeys.uniqueKey)\":\"" + "\(uniqueKey)" + "\"}"]
+        let parameters = ["\(Constants.ParameterKeys.Where)": "{\"\(Constants.ParameterKeys.uniqueKey)\":\"" + "\(uniqueKey)" + "\"}"]
         
-        let _ = taskForParseRequest(requestType: Constants.Parse.HTTPMethods.get, optionalParameters: parameters as [String: AnyObject], pathExtension: nil, addContentType: false, httpBody: nil) { (result, error) in
+        let _ = taskForParseRequest(requestType: Constants.HTTPMethods.get, optionalParameters: parameters as [String: AnyObject], pathExtension: nil, addContentType: false, httpBody: nil) { (result, error) in
             
             guard (error == nil) else {
                 completionHandlerForSingleStudentLocation(nil, error)
                 return
             }
             
-            if let results = result?[Constants.Parse.JSONResponseKeys.results] as? [[String: AnyObject]] {
+            if let results = result?[Constants.JSONResponseKeys.results] as? [[String: AnyObject]] {
                 
                 if results.count == 1 {
                     let studentLocation = StudentLocation.studentLocationsFromResults(results)
@@ -120,16 +120,16 @@ class ParseClient {
         
         let parameters = [String: AnyObject]()
         
-        let httpBody = "{\"\(Constants.Parse.StudentLocKeys.uniqueKey)\": \"\(uniqueKey)\", \"\(Constants.Parse.StudentLocKeys.firstName)\": \"\(firstName)\", \"\(Constants.Parse.StudentLocKeys.lastName)\": \"\(lastName)\",\"\(Constants.Parse.StudentLocKeys.mapString)\": \"\(mapString)\", \"\(Constants.Parse.StudentLocKeys.mediaURL)\": \"\(mediaUrl)\",\"\(Constants.Parse.StudentLocKeys.latitude)\": \(latitude), \"\(Constants.Parse.StudentLocKeys.longitude)\": \(longitude)}"
+        let httpBody = "{\"\(Constants.StudentLocKeys.uniqueKey)\": \"\(uniqueKey)\", \"\(Constants.StudentLocKeys.firstName)\": \"\(firstName)\", \"\(Constants.StudentLocKeys.lastName)\": \"\(lastName)\",\"\(Constants.StudentLocKeys.mapString)\": \"\(mapString)\", \"\(Constants.StudentLocKeys.mediaURL)\": \"\(mediaUrl)\",\"\(Constants.StudentLocKeys.latitude)\": \(latitude), \"\(Constants.StudentLocKeys.longitude)\": \(longitude)}"
         
-        let _ = taskForParseRequest(requestType: Constants.Parse.HTTPMethods.post, optionalParameters: parameters, pathExtension: nil, addContentType: true, httpBody: httpBody) { (result, error) in
+        let _ = taskForParseRequest(requestType: Constants.HTTPMethods.post, optionalParameters: parameters, pathExtension: nil, addContentType: true, httpBody: httpBody) { (result, error) in
             
             guard (error == nil) else {
                 completionHandlerForPostStudentLocation(nil, nil, error)
                 return
             }
             
-            if let createdAt = result?[Constants.Parse.JSONResponseKeys.createdAt], let objectId = result?[Constants.Parse.JSONResponseKeys.objectId] {
+            if let createdAt = result?[Constants.JSONResponseKeys.createdAt], let objectId = result?[Constants.JSONResponseKeys.objectId] {
                 completionHandlerForPostStudentLocation(createdAt as! String?, objectId as! String?, nil)
             } else {
                 completionHandlerForPostStudentLocation(nil, nil, NSError(domain: "postStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postStudentLocation"]))
@@ -141,18 +141,18 @@ class ParseClient {
         
         let parameters = [String: AnyObject]()
         
-        let httpBody = "{\"\(Constants.Parse.StudentLocKeys.uniqueKey)\": \"\(uniqueKey)\", \"\(Constants.Parse.StudentLocKeys.firstName)\": \"\(firstName)\", \"\(Constants.Parse.StudentLocKeys.lastName)\": \"\(lastName)\",\"\(Constants.Parse.StudentLocKeys.mapString)\": \"\(mapString)\", \"\(Constants.Parse.StudentLocKeys.mediaURL)\": \"\(mediaUrl)\",\"\(Constants.Parse.StudentLocKeys.latitude)\": \(latitude), \"\(Constants.Parse.StudentLocKeys.longitude)\": \(longitude)}"
+        let httpBody = "{\"\(Constants.StudentLocKeys.uniqueKey)\": \"\(uniqueKey)\", \"\(Constants.StudentLocKeys.firstName)\": \"\(firstName)\", \"\(Constants.StudentLocKeys.lastName)\": \"\(lastName)\",\"\(Constants.StudentLocKeys.mapString)\": \"\(mapString)\", \"\(Constants.StudentLocKeys.mediaURL)\": \"\(mediaUrl)\",\"\(Constants.StudentLocKeys.latitude)\": \(latitude), \"\(Constants.StudentLocKeys.longitude)\": \(longitude)}"
         
         let pathExtension = "/\(objectId)"
         
-        let _ = taskForParseRequest(requestType: Constants.Parse.HTTPMethods.put, optionalParameters: parameters, pathExtension: pathExtension, addContentType: true, httpBody: httpBody) { (result, error) in
+        let _ = taskForParseRequest(requestType: Constants.HTTPMethods.put, optionalParameters: parameters, pathExtension: pathExtension, addContentType: true, httpBody: httpBody) { (result, error) in
             
             guard (error == nil) else {
                 completionHandlerForUpdateStudentLocation(nil, error)
                 return
             }
             
-            if let updatedAt = result?[Constants.Parse.JSONResponseKeys.updatedAt] {
+            if let updatedAt = result?[Constants.JSONResponseKeys.updatedAt] {
                 completionHandlerForUpdateStudentLocation(updatedAt as! String?, nil)
             } else {
                 completionHandlerForUpdateStudentLocation(nil, NSError(domain: "updateStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse updateStudentLocation"]))
@@ -164,9 +164,9 @@ class ParseClient {
     private func parseURLFromParameters(_ parameters: [String:AnyObject], method: String? = nil, withPathExtension: String? = nil) -> URL {
         
         var components = URLComponents()
-        components.scheme = Constants.Parse.APIComponents.scheme
-        components.host = Constants.Parse.APIComponents.host
-        components.path = Constants.Parse.APIComponents.path + (method ?? "") + (withPathExtension ?? "")
+        components.scheme = Constants.ParseAPIComponents.scheme
+        components.host = Constants.ParseAPIComponents.host
+        components.path = Constants.ParseAPIComponents.path + (method ?? "") + (withPathExtension ?? "")
         components.queryItems = [URLQueryItem]()
         
         for (key, value) in parameters {

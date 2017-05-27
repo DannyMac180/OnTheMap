@@ -7,14 +7,14 @@
 //
 
 struct Constants {
-    
-    struct Udacity {
-        static let baseUrl = "https://www.udacity.com/"
-    }
-    
-    struct Parse {
         
-        struct APIComponents {
+        struct UdacityAPIComponents {
+            static let scheme = "https"
+            static let host =   "www.udacity.com"
+            static let path =   "/api/session"
+        }
+        
+        struct ParseAPIComponents {
             static let scheme = "https"
             static let host = "parse.udacity.com"
             static let path = "/parse/classes"
@@ -79,4 +79,3 @@ struct Constants {
             static let put = "PUT"
         }
     }
-}
