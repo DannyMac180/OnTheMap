@@ -43,6 +43,9 @@ struct Constants {
             static let order = "order"
             static let Where = "where"
             static let uniqueKey = "uniqueKey"
+            static let udacity = "udacity"
+            static let username = "username"
+            static let password = "password"
         }
         
         struct ParamterValues {
@@ -61,6 +64,12 @@ struct Constants {
             static let longitude = "longitude"
             static let createdAt = "createdAt"
             static let updatedAt = "updatedAt"
+            static let account = "account"
+            static let session = "session"
+            static let registered = "registered"
+            static let key = "key"
+            static let id = "id"
+            static let expiration = "expiration"
         }
         
         struct StudentLocKeys {

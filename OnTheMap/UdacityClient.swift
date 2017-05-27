@@ -19,6 +19,72 @@ class UdacityClient: NSObject {
         return Singleton.sharedInstance
     }
     
-    func taskForUdacityRequest()
+    func authenticateUdacitySession(username: String, password: String, completionHandlerForUdacityAuthentication: @escaping (_ registered: Bool?, _ key: String?, _ id: String?, _ expiration: String?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        let request = NSMutableURLRequest(url: udacityURLFromParameters())
+        request.httpMethod = Constants.HTTPMethods.post
+        request.addValue(Constants.HeaderValues.application_json, forHTTPHeaderField: Constants.HeaderKeys.accept)
+        request.addValue(Constants.HeaderValues.application_json, forHTTPHeaderField: Constants.HeaderKeys.content_type)
+        request.httpBody = "{\"\(Constants.ParameterKeys.udacity)\": {\"\(Constants.ParameterKeys.username)\": \"\(username)\", \"\(Constants.ParameterKeys.password)\": \"\(password)\"}}".data(using: String.Encoding.utf8)
+        
+        let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            print(request)
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey : error]
+                completionHandlerForUdacityAuthentication(nil, nil, nil, nil, NSError(domain: "authenticateUdacitySession", code: 1, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+
+            let range = Range(5..<data.count)
+            
+            let newData = data.subdata(in: range)
+            
+            var parsedResult: AnyObject!
+            do {
+                parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
+            } catch {
+                sendError("JSONSerialization did not work.")
+            }
+            
+            if let account = parsedResult?[Constants.JSONResponseKeys.account] as? [String: AnyObject], let session = parsedResult?[Constants.JSONResponseKeys.session] as? [String: AnyObject] {
+                if let registered = account[Constants.JSONResponseKeys.registered] as? Bool, let key = account[Constants.JSONResponseKeys.key] as? String,  let id = session[Constants.JSONResponseKeys.id] as? String, let expiration = session[Constants.JSONResponseKeys.expiration] as? String {
+                    completionHandlerForUdacityAuthentication(registered, key, id, expiration, nil)
+                }
+            } else {
+                completionHandlerForUdacityAuthentication(nil, nil, nil, nil, error as? NSError)
+            }
+        }
+        
+        /* 7. Start the request */
+        task.resume()
+        
+        return task
+    }
     
+    private func udacityURLFromParameters() -> URL {
+        
+        var components = URLComponents()
+        components.scheme = Constants.UdacityAPIComponents.scheme
+        components.host = Constants.UdacityAPIComponents.host
+        components.path = Constants.UdacityAPIComponents.path
+        
+        return components.url!
+    }
 }

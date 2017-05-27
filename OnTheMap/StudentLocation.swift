@@ -23,14 +23,14 @@ struct StudentLocation {
     // MARK: Initializers
     
     init(dictionary: [String: AnyObject]) {
-        objectId = dictionary[Constants.Parse.JSONResponseKeys.objectId] as? String ?? ""
-        uniqueKey = dictionary[Constants.Parse.JSONResponseKeys.uniqueKey] as? String ?? ""
-        firstName = dictionary[Constants.Parse.JSONResponseKeys.firstName] as? String ?? ""
-        lastName = dictionary[Constants.Parse.JSONResponseKeys.lastName] as? String ?? ""
-        mapString = dictionary[Constants.Parse.JSONResponseKeys.mapString] as? String ?? ""
-        mediaURL = dictionary[Constants.Parse.JSONResponseKeys.mediaURL] as? String ?? ""
-        latitude = dictionary[Constants.Parse.JSONResponseKeys.latitude] as? Double ?? 0.0
-        longitude = dictionary[Constants.Parse.JSONResponseKeys.longitude] as? Double ?? 0.0
+        objectId = dictionary[Constants.JSONResponseKeys.objectId] as? String ?? ""
+        uniqueKey = dictionary[Constants.JSONResponseKeys.uniqueKey] as? String ?? ""
+        firstName = dictionary[Constants.JSONResponseKeys.firstName] as? String ?? ""
+        lastName = dictionary[Constants.JSONResponseKeys.lastName] as? String ?? ""
+        mapString = dictionary[Constants.JSONResponseKeys.mapString] as? String ?? ""
+        mediaURL = dictionary[Constants.JSONResponseKeys.mediaURL] as? String ?? ""
+        latitude = dictionary[Constants.JSONResponseKeys.latitude] as? Double ?? 0.0
+        longitude = dictionary[Constants.JSONResponseKeys.longitude] as? Double ?? 0.0
     }
     
     static func studentLocationsFromResults(_ results: [[String: AnyObject]]) -> [StudentLocation] {
