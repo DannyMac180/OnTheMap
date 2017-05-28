@@ -19,5 +19,14 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        UdacityClient.sharedInstance().logoutWithUdacity() { (id, expiration, error) in
+            
+            if let id = id {
+                print(id)
+            } else {
+                print(error)
+            }
+        }
     }
 }
