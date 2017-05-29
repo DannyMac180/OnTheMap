@@ -74,6 +74,8 @@ struct Constants {
         static let id = "id"
         static let expiration = "expiration"
         static let user = "user"
+        static let first_name = "first_name"
+        static let last_name = "last_name"
     }
     
     struct StudentLocKeys {
