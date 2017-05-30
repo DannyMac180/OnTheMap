@@ -99,5 +99,9 @@ struct Constants {
         static let xsrfToken = "XSRF-TOKEN"
     }
     
+    struct Identifiers {
+        static let loginSegue = "loginSegue"
+    }
+    
     
 }

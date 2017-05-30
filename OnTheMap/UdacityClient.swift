@@ -19,7 +19,7 @@ class UdacityClient: NSObject {
         return Singleton.sharedInstance
     }
     
-    func authenticateUdacitySession(username: String, password: String, completionHandlerForUdacityAuthentication: @escaping ( _ key: String?, _ id: String?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func authenticateUdacitySession(username: String, password: String, completionHandlerForUdacityAuthentication: @escaping ( _ key: String?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(withMethod: Constants.Methods.session, withPathExtension: nil))
         request.httpMethod = Constants.HTTPMethods.post
@@ -34,7 +34,7 @@ class UdacityClient: NSObject {
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForUdacityAuthentication(nil, nil, NSError(domain: "authenticateUdacitySession", code: 1, userInfo: userInfo))
+                completionHandlerForUdacityAuthentication(nil, NSError(domain: "authenticateUdacitySession", code: 1, userInfo: userInfo))
             }
             
             guard (error == nil) else {
@@ -63,12 +63,12 @@ class UdacityClient: NSObject {
                 sendError("JSONSerialization did not work.")
             }
             
-            if let account = parsedResult?[Constants.JSONResponseKeys.account] as? [String: AnyObject], let session = parsedResult?[Constants.JSONResponseKeys.session] as? [String: AnyObject] {
-                if let key = account[Constants.JSONResponseKeys.key] as? String,  let id = session[Constants.JSONResponseKeys.id] as? String {
-                    completionHandlerForUdacityAuthentication(key, id, nil)
+            if let account = parsedResult?[Constants.JSONResponseKeys.account] as? [String: AnyObject] {
+                if let key = account[Constants.JSONResponseKeys.key] as? String {
+                    completionHandlerForUdacityAuthentication(key, nil)
                 }
             } else {
-                completionHandlerForUdacityAuthentication(nil, nil, error as? NSError)
+                completionHandlerForUdacityAuthentication(nil, error as? NSError)
             }
         }
         

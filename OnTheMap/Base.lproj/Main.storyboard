@@ -44,6 +44,10 @@
                                         <state key="normal" title="Log In">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mjl-C5-A3Q"/>
+                                            <segue destination="g4H-XY-7YU" kind="show" identifier="loginSegue" id="LYH-ae-bnI"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -82,6 +86,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="xhN-Cg-L7t" id="reK-m5-fYd"/>
                         <outlet property="emailTextField" destination="4Ts-AT-AGP" id="VIb-1X-NZw"/>
+                        <outlet property="emailTextfield" destination="4Ts-AT-AGP" id="geZ-wY-fEc"/>
                         <outlet property="errorLabel" destination="8aL-N8-9oE" id="Bne-R3-erZ"/>
                         <outlet property="loginButton" destination="unO-6j-ZJ3" id="sib-Ku-BPB"/>
                         <outlet property="passwordTextfield" destination="bET-GY-XZy" id="KLN-4y-xfS"/>
