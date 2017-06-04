@@ -6,17 +6,17 @@
 //  Copyright © 2017 Daniel McAteer. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-struct StudentModel {
+class StudentModel: NSObject {
     
-    var studentsArray: [StudentInfo] = []
-    var currentUser: StudentInfo? = nil
+    var studentsArray = [StudentLocation]()
+    var currentUser: StudentInfo?
     
-    static func sharedInstance() -> StudentModel {
-        struct Singleton {
-            static var sharedInstance = StudentModel()
-        }
-        return Singleton.sharedInstance
+    static let sharedInstance = StudentModel()
+    
+    class func sharedStudentModel() -> StudentModel  {
+        return sharedInstance
     }
+   
 }

@@ -10,13 +10,10 @@ import Foundation
 
 struct StudentInfo {
     
-    let accountKey: String
-    let firstName: String
-    let lastName: String
+    var accountKey: String
+    var firstName: String
+    var lastName: String
     var mediaURL: String
-    var fullName: String {
-        return "\(firstName) \(lastName)"
-    }
     
     init(accountKey: String, firstName: String, lastName: String, mediaURL: String) {
         self.accountKey = accountKey

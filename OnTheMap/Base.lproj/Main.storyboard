@@ -23,23 +23,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="qjo-F6-K2l">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="qjo-F6-K2l">
                                 <rect key="frame" x="71" y="166" width="233" height="127"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Ts-AT-AGP">
-                                        <rect key="frame" x="0.0" y="0.0" width="233" height="31"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4Ts-AT-AGP">
+                                        <rect key="frame" x="0.0" y="0.0" width="233" height="30.5"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bET-GY-XZy">
-                                        <rect key="frame" x="0.0" y="49" width="233" height="30"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bET-GY-XZy">
+                                        <rect key="frame" x="0.0" y="48.5" width="233" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="unO-6j-ZJ3">
-                                        <rect key="frame" x="0.0" y="97" width="233" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="unO-6j-ZJ3">
+                                        <rect key="frame" x="0.0" y="96.5" width="233" height="30.5"/>
                                         <color key="backgroundColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
                                         <state key="normal" title="Log In">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -50,6 +50,13 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="4Ts-AT-AGP" firstAttribute="leading" secondItem="qjo-F6-K2l" secondAttribute="leading" id="5P6-bR-fuR"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Ts-AT-AGP" secondAttribute="trailing" id="9Zo-IG-KES"/>
+                                    <constraint firstItem="4Ts-AT-AGP" firstAttribute="top" secondItem="qjo-F6-K2l" secondAttribute="top" id="VQ3-7O-r3d"/>
+                                    <constraint firstItem="bET-GY-XZy" firstAttribute="top" secondItem="4Ts-AT-AGP" secondAttribute="bottom" constant="18" id="dKL-cy-d0Y"/>
+                                    <constraint firstItem="bET-GY-XZy" firstAttribute="top" secondItem="4Ts-AT-AGP" secondAttribute="bottom" constant="18" id="p39-Ro-Yg7"/>
+                                </constraints>
                             </stackView>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-u" translatesAutoresizingMaskIntoConstraints="NO" id="l3H-yp-9VI">
                                 <rect key="frame" x="149" y="72" width="62" height="62"/>
@@ -85,8 +92,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="xhN-Cg-L7t" id="reK-m5-fYd"/>
-                        <outlet property="emailTextField" destination="4Ts-AT-AGP" id="VIb-1X-NZw"/>
-                        <outlet property="emailTextfield" destination="4Ts-AT-AGP" id="geZ-wY-fEc"/>
+                        <outlet property="emailTextfield" destination="4Ts-AT-AGP" id="4xg-ea-Vzd"/>
                         <outlet property="errorLabel" destination="8aL-N8-9oE" id="Bne-R3-erZ"/>
                         <outlet property="loginButton" destination="unO-6j-ZJ3" id="sib-Ku-BPB"/>
                         <outlet property="passwordTextfield" destination="bET-GY-XZy" id="KLN-4y-xfS"/>
@@ -109,53 +115,58 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cva-kK-cvG">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="49" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Cva-kK-cvG">
                                 <rect key="frame" x="0.0" y="20" width="375" height="598"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <navigationBar key="tableFooterView" contentMode="scaleToFill" translucent="NO" id="Umz-OJ-jtw">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                    <items>
-                                        <navigationItem title="On the Map" id="Kfp-DJ-NWH">
-                                            <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="fz4-qR-5l4">
-                                                <connections>
-                                                    <action selector="logout:" destination="zjH-dU-J6G" id="9j3-IE-cig"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <rightBarButtonItems>
-                                                <barButtonItem image="icon_addpin" id="jrV-mz-l53">
-                                                    <connections>
-                                                        <action selector="addPin:" destination="zjH-dU-J6G" id="2kk-F2-ce2"/>
-                                                    </connections>
-                                                </barButtonItem>
-                                                <barButtonItem image="icon_refresh" id="Svt-Sa-M2Y">
-                                                    <connections>
-                                                        <action selector="refresh:" destination="zjH-dU-J6G" id="VHR-aH-Eqi"/>
-                                                    </connections>
-                                                </barButtonItem>
-                                            </rightBarButtonItems>
-                                        </navigationItem>
-                                    </items>
-                                </navigationBar>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentTableViewCell" id="t8F-3a-AQO">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="49"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t8F-3a-AQO" id="tDD-qc-AhX">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="zjH-dU-J6G" id="bNC-2o-ahP"/>
                                     <outlet property="delegate" destination="zjH-dU-J6G" id="hET-Zu-4tn"/>
                                 </connections>
                             </tableView>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J7O-r8-jPo">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="On the Map" id="Bih-5O-1Vl">
+                                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="Mu1-l6-ZPo"/>
+                                        <rightBarButtonItems>
+                                            <barButtonItem systemItem="add" id="cvR-29-Uw7"/>
+                                            <barButtonItem systemItem="refresh" id="EJg-UR-ima">
+                                                <connections>
+                                                    <action selector="refresh:" destination="zjH-dU-J6G" id="w0A-A3-dKd"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="8oa-3l-nqg" firstAttribute="top" secondItem="Cva-kK-cvG" secondAttribute="bottom" id="Fhp-TG-Iah"/>
                             <constraint firstItem="Cva-kK-cvG" firstAttribute="leading" secondItem="r8d-Gw-d7A" secondAttribute="leading" id="So8-5Z-OhN"/>
+                            <constraint firstItem="J7O-r8-jPo" firstAttribute="top" secondItem="Cva-kK-cvG" secondAttribute="top" id="TfA-3h-V5o"/>
                             <constraint firstItem="Cva-kK-cvG" firstAttribute="top" secondItem="ekj-Pm-423" secondAttribute="bottom" id="WTb-5P-nxc"/>
                             <constraint firstAttribute="trailing" secondItem="Cva-kK-cvG" secondAttribute="trailing" id="q4d-TC-z5n"/>
+                            <constraint firstAttribute="trailing" secondItem="J7O-r8-jPo" secondAttribute="trailing" id="xEH-Jq-A8o"/>
+                            <constraint firstItem="J7O-r8-jPo" firstAttribute="leading" secondItem="r8d-Gw-d7A" secondAttribute="leading" id="yGK-OK-e06"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="icon_listview-selected" id="231-8l-BuP">
                         <inset key="imageInsets" minX="0.0" minY="8" maxX="0.0" maxY="-8"/>
                     </tabBarItem>
                     <connections>
-                        <outlet property="tableView" destination="Cva-kK-cvG" id="mD6-fd-hT2"/>
+                        <outlet property="navigationBar" destination="J7O-r8-jPo" id="2ug-AT-NSF"/>
+                        <outlet property="tableView" destination="Cva-kK-cvG" id="tWU-5X-Is2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9AC-3I-1Pj" userLabel="First Responder" sceneMemberID="firstResponder"/>

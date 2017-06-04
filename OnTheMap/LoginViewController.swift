@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let udacityClient = UdacityClient.sharedInstance()
-    var studentModel = StudentModel.sharedInstance()
+    var studentModel = StudentModel.sharedInstance
     
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -52,7 +52,7 @@ class LoginViewController: UIViewController {
                         self.udacityClient.getStudentData(accountKey: key) { (student, error) in
                             DispatchQueue.main.async {
                                 if let student = student {
-                                    self.studentModel.currentUser = student
+                                    self.studentModel.currentUser = StudentInfo(accountKey: student.accountKey, firstName: student.firstName, lastName: student.lastName, mediaURL: student.mediaURL)
                                     self.performSegue(withIdentifier: Constants.Identifiers.loginSegue, sender: self)
                                 } else {
                                     self.alertWithError(error: error as! String)
