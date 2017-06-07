@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     let udacityClient = UdacityClient.sharedInstance()
+    let parseClient = ParseClient.sharedInstance()
     var studentModel = StudentModel.sharedInstance
     
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -62,6 +63,18 @@ class LoginViewController: UIViewController {
                     } else {
                         self.alertWithError(error: error as! String)
                     }
+                }
+            }
+        }
+        
+        parseClient.getMutlipleStudentLocations() { (studentLocations, error) in
+            DispatchQueue.main.async {
+                if let studentLocations = studentLocations {
+                    for student in studentLocations {
+                        self.studentModel.studentsArray.append(student)
+                    }
+                } else {
+                    self.alertWithError(error: String(describing: error))
                 }
             }
         }

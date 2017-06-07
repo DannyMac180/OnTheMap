@@ -17,18 +17,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     var parseClient = ParseClient.sharedInstance()
     
     override func viewDidLoad() {
-        parseClient.getMutlipleStudentLocations() { (studentLocations, error) in
-            DispatchQueue.main.async {
-                if let studentLocations = studentLocations {
-                    for student in studentLocations {
-                        self.studentModel.studentsArray.append(student)
-                    }
-                } else {
-                    print(error)
-                }
-                self.tableView.reloadData()
-            }
-        }
+        self.tableView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,6 +36,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         let student = self.studentModel.studentsArray[(indexPath as NSIndexPath).row]
         
         cell.textLabel?.text = "\(student.firstName) \(student.lastName)"
+        cell.detailTextLabel?.text = "\(student.mediaURL)"
         
         return cell
     }
