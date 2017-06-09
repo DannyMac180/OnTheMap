@@ -159,7 +159,11 @@
                                     <navigationItem title="On the Map" id="Bih-5O-1Vl">
                                         <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="Mu1-l6-ZPo"/>
                                         <rightBarButtonItems>
-                                            <barButtonItem systemItem="add" id="cvR-29-Uw7"/>
+                                            <barButtonItem systemItem="add" id="cvR-29-Uw7">
+                                                <connections>
+                                                    <segue destination="yB2-fg-gNm" kind="presentation" id="7dD-td-d1m"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem systemItem="refresh" id="EJg-UR-ima">
                                                 <connections>
                                                     <action selector="refresh:" destination="zjH-dU-J6G" id="w0A-A3-dKd"/>
@@ -279,56 +283,140 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="VG2-l0-WKF">
-                                <rect key="frame" x="71" y="134" width="233" height="126"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1iB-g9-LLx">
-                                        <rect key="frame" x="0.0" y="0.0" width="233" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Website" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ozq-Ni-nwv">
-                                        <rect key="frame" x="0.0" y="48" width="233" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O00-gF-uw2">
-                                        <rect key="frame" x="0.0" y="96" width="233" height="30"/>
-                                        <color key="backgroundColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
-                                        <state key="normal" title="FIND LOCATION">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="findLocation:" destination="yB2-fg-gNm" eventType="touchUpInside" id="oSc-Fb-bKz"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="W2J-Kr-diy">
-                                <rect key="frame" x="156" y="49" width="63" height="68"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="2bZ-ha-3fn">
+                                <rect key="frame" x="156" y="150" width="62" height="62"/>
                             </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="245" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Iy-XD-ZL3">
+                                <rect key="frame" x="71" y="234" width="233" height="30.5"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwb-Da-Q0u">
+                                <rect key="frame" x="71" y="337" width="233" height="30.5"/>
+                                <color key="backgroundColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
+                                <state key="normal" title="Find Location">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="findLocation:" destination="yB2-fg-gNm" eventType="touchUpInside" id="dZM-0T-qZq"/>
+                                    <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hcT-OC-QNe"/>
+                                    <segue destination="kOh-4y-x4i" kind="show" identifier="findLocationSegue" id="t4j-UG-aLq"/>
+                                </connections>
+                            </button>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAO-Dm-Gky">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Add Location" id="ygU-Wz-6TY">
+                                        <barButtonItem key="leftBarButtonItem" title="CANCEL" id="gNL-PO-LYB">
+                                            <connections>
+                                                <action selector="cancel:" destination="yB2-fg-gNm" id="OaP-Ao-Qp7"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Website" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UbY-kS-5cf">
+                                <rect key="frame" x="71" y="285" width="233" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="VG2-l0-WKF" firstAttribute="leading" secondItem="MNa-9I-FJj" secondAttribute="leadingMargin" constant="55" id="0cZ-wE-gBz"/>
-                            <constraint firstItem="VG2-l0-WKF" firstAttribute="top" secondItem="1hP-6H-rVn" secondAttribute="bottom" constant="114" id="8fg-TA-RIr"/>
-                            <constraint firstItem="W2J-Kr-diy" firstAttribute="top" secondItem="1hP-6H-rVn" secondAttribute="bottom" constant="29" id="Lgy-ii-03b"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="VG2-l0-WKF" secondAttribute="trailing" constant="55" id="SXb-ep-aJE"/>
-                            <constraint firstItem="W2J-Kr-diy" firstAttribute="leading" secondItem="MNa-9I-FJj" secondAttribute="leadingMargin" constant="140" id="XCd-y1-7Fg"/>
-                            <constraint firstItem="VG2-l0-WKF" firstAttribute="top" secondItem="W2J-Kr-diy" secondAttribute="bottom" constant="17" id="hsH-uX-UOl"/>
-                            <constraint firstItem="W2J-Kr-diy" firstAttribute="centerX" secondItem="VG2-l0-WKF" secondAttribute="centerX" id="keF-5h-PrI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UbY-kS-5cf" secondAttribute="trailing" constant="55" id="AqT-gO-r4E"/>
+                            <constraint firstItem="0Iy-XD-ZL3" firstAttribute="top" secondItem="2bZ-ha-3fn" secondAttribute="bottom" constant="23" id="BY8-Cc-L7s"/>
+                            <constraint firstItem="3Ot-Ja-Eqd" firstAttribute="top" secondItem="dwb-Da-Q0u" secondAttribute="bottom" constant="299.5" id="GGo-X2-mE4"/>
+                            <constraint firstItem="dwb-Da-Q0u" firstAttribute="leading" secondItem="MNa-9I-FJj" secondAttribute="leadingMargin" constant="55" id="LNd-LE-Sdk"/>
+                            <constraint firstItem="UbY-kS-5cf" firstAttribute="top" secondItem="0Iy-XD-ZL3" secondAttribute="bottom" constant="20.5" id="LhR-5c-Hps"/>
+                            <constraint firstItem="2bZ-ha-3fn" firstAttribute="top" secondItem="1hP-6H-rVn" secondAttribute="bottom" constant="129" id="R3i-b4-JJc"/>
+                            <constraint firstItem="2bZ-ha-3fn" firstAttribute="leading" secondItem="MNa-9I-FJj" secondAttribute="leadingMargin" constant="140" id="Rjt-Ad-ccF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2bZ-ha-3fn" secondAttribute="trailing" constant="141" id="SEv-VD-kOV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0Iy-XD-ZL3" secondAttribute="trailing" constant="55" id="Y8l-WQ-MR8"/>
+                            <constraint firstItem="0Iy-XD-ZL3" firstAttribute="top" secondItem="2bZ-ha-3fn" secondAttribute="bottom" constant="23" id="axs-g3-hfO"/>
+                            <constraint firstItem="UbY-kS-5cf" firstAttribute="top" secondItem="0Iy-XD-ZL3" secondAttribute="bottom" constant="20.5" id="brS-pw-fZY"/>
+                            <constraint firstItem="dwb-Da-Q0u" firstAttribute="top" secondItem="UbY-kS-5cf" secondAttribute="bottom" constant="22" id="dzW-9V-ew2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dwb-Da-Q0u" secondAttribute="trailing" constant="55" id="iWw-DB-f82"/>
+                            <constraint firstItem="dwb-Da-Q0u" firstAttribute="top" secondItem="UbY-kS-5cf" secondAttribute="bottom" constant="22" id="oEz-vb-9sK"/>
+                            <constraint firstItem="UbY-kS-5cf" firstAttribute="leading" secondItem="MNa-9I-FJj" secondAttribute="leadingMargin" constant="55" id="vOF-td-aqh"/>
+                            <constraint firstItem="0Iy-XD-ZL3" firstAttribute="leading" secondItem="MNa-9I-FJj" secondAttribute="leadingMargin" constant="55" id="zUd-7j-MUD"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="enterLocationTextField" destination="1iB-g9-LLx" id="Tfd-VD-xqa"/>
-                        <outlet property="enterWebsiteTextField" destination="ozq-Ni-nwv" id="JSU-z6-Uv1"/>
+                        <outlet property="enterLocationTextField" destination="0Iy-XD-ZL3" id="R8a-Ko-qxw"/>
+                        <outlet property="enterWebsiteTextField" destination="UbY-kS-5cf" id="aEn-xr-ulk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GX2-7J-yhc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2613.5999999999999" y="131.78410794602701"/>
+        </scene>
+        <!--Cofirm Location View Controller-->
+        <scene sceneID="GPV-Ju-NxA">
+            <objects>
+                <viewController id="kOh-4y-x4i" customClass="CofirmLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pID-OI-ghF"/>
+                        <viewControllerLayoutGuide type="bottom" id="JO7-rf-9FU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BGD-E3-bit">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ifz-kg-aBT">
+                                <rect key="frame" x="0.0" y="65" width="375" height="602"/>
+                            </mapView>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a81-Xq-WFB">
+                                <rect key="frame" x="0.0" y="20" width="375" height="45"/>
+                                <items>
+                                    <navigationItem title="Confirm Location" id="cxf-kw-Hzx">
+                                        <barButtonItem key="leftBarButtonItem" image="icon_back-arrow" id="fS2-Hz-qIg">
+                                            <connections>
+                                                <segue destination="yB2-fg-gNm" kind="popoverPresentation" popoverAnchorBarButtonItem="fS2-Hz-qIg" id="kDb-te-at6">
+                                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                </segue>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHw-gc-Nga">
+                                <rect key="frame" x="71" y="592.5" width="233" height="30"/>
+                                <color key="backgroundColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
+                                <state key="normal" title="Finish">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="findLocation:" destination="yB2-fg-gNm" eventType="touchUpInside" id="ici-KM-G7t"/>
+                                    <action selector="finish:" destination="kOh-4y-x4i" eventType="touchUpInside" id="ERq-Su-B14"/>
+                                    <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hPx-rN-EmK"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JO7-rf-9FU" firstAttribute="top" secondItem="oHw-gc-Nga" secondAttribute="bottom" constant="44.5" id="5GC-TW-9Ho"/>
+                            <constraint firstItem="Ifz-kg-aBT" firstAttribute="top" secondItem="a81-Xq-WFB" secondAttribute="bottom" id="5ds-wx-Xo0"/>
+                            <constraint firstItem="Ifz-kg-aBT" firstAttribute="leading" secondItem="BGD-E3-bit" secondAttribute="leading" id="AKW-13-bR8"/>
+                            <constraint firstItem="JO7-rf-9FU" firstAttribute="top" secondItem="Ifz-kg-aBT" secondAttribute="bottom" id="CgB-Mk-Iz3"/>
+                            <constraint firstItem="oHw-gc-Nga" firstAttribute="leading" secondItem="BGD-E3-bit" secondAttribute="leadingMargin" constant="55" id="Jbd-x0-lbX"/>
+                            <constraint firstItem="a81-Xq-WFB" firstAttribute="leading" secondItem="Ifz-kg-aBT" secondAttribute="leading" id="Uix-TW-BR0"/>
+                            <constraint firstItem="a81-Xq-WFB" firstAttribute="trailing" secondItem="Ifz-kg-aBT" secondAttribute="trailing" id="VbA-iE-kPk"/>
+                            <constraint firstAttribute="trailing" secondItem="Ifz-kg-aBT" secondAttribute="trailing" id="bEG-8j-JEt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oHw-gc-Nga" secondAttribute="trailing" constant="55" id="c3w-HA-C41"/>
+                            <constraint firstItem="a81-Xq-WFB" firstAttribute="top" secondItem="pID-OI-ghF" secondAttribute="bottom" id="eoV-EO-ibh"/>
+                            <constraint firstItem="oHw-gc-Nga" firstAttribute="top" secondItem="a81-Xq-WFB" secondAttribute="bottom" constant="528" id="ti4-BO-y7W"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="Ifz-kg-aBT" id="b3h-pz-KR0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PyW-Lk-KB2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3317.5999999999999" y="131.78410794602701"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="zRZ-cK-lo7">
@@ -351,6 +439,7 @@
     </scenes>
     <resources>
         <image name="icon_addpin" width="24" height="24"/>
+        <image name="icon_back-arrow" width="24" height="24"/>
         <image name="icon_listview-selected" width="75" height="50"/>
         <image name="icon_mapview-selected" width="75" height="50"/>
         <image name="icon_pin" width="24" height="24"/>
@@ -358,4 +447,7 @@
         <image name="icon_world" width="52" height="67"/>
         <image name="logo-u" width="62" height="62"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="kDb-te-at6"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -21,6 +21,7 @@
 		3087BA541ED0BD93009D85F0 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3087BA531ED0BD93009D85F0 /* ParseClient.swift */; };
 		3087BA561EDA5443009D85F0 /* StudentInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3087BA551EDA5443009D85F0 /* StudentInfo.swift */; };
 		3087BA581EDBB65A009D85F0 /* StudentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3087BA571EDBB65A009D85F0 /* StudentModel.swift */; };
+		309499A51EE8E68000409F1C /* ConfirmLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309499A41EE8E68000409F1C /* ConfirmLocationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		3087BA531ED0BD93009D85F0 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		3087BA551EDA5443009D85F0 /* StudentInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInfo.swift; sourceTree = "<group>"; };
 		3087BA571EDBB65A009D85F0 /* StudentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentModel.swift; sourceTree = "<group>"; };
+		309499A41EE8E68000409F1C /* ConfirmLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmLocationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				304588621EC2752900B79460 /* MapKitViewController.swift */,
 				304588641EC559E900B79460 /* ListViewController.swift */,
 				304588661EC565E100B79460 /* AddLocationViewController.swift */,
+				309499A41EE8E68000409F1C /* ConfirmLocationViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -196,6 +199,7 @@
 				304588671EC565E100B79460 /* AddLocationViewController.swift in Sources */,
 				304588651EC559E900B79460 /* ListViewController.swift in Sources */,
 				3015BC0C1EC1584700BEA550 /* AppDelegate.swift in Sources */,
+				309499A51EE8E68000409F1C /* ConfirmLocationViewController.swift in Sources */,
 				3045886D1EC9D3FA00B79460 /* UdacityClient.swift in Sources */,
 				3087BA581EDBB65A009D85F0 /* StudentModel.swift in Sources */,
 				3045886B1EC9CE5700B79460 /* Constants.swift in Sources */,
