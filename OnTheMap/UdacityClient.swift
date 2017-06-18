@@ -19,7 +19,7 @@ class UdacityClient: NSObject {
         return Singleton.sharedInstance
     }
     
-    func authenticateUdacitySession(username: String, password: String, completionHandlerForUdacityAuthentication: @escaping ( _ key: String?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func authenticateUdacitySession(username: String, password: String, completionHandlerForUdacityAuthentication: @escaping ( _ key: String?, _ error: String?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(withMethod: Constants.Methods.session, withPathExtension: nil))
         request.httpMethod = Constants.HTTPMethods.post
@@ -29,12 +29,9 @@ class UdacityClient: NSObject {
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            print(request)
-            
             func sendError(_ error: String) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForUdacityAuthentication(nil, NSError(domain: "authenticateUdacitySession", code: 1, userInfo: userInfo))
+                completionHandlerForUdacityAuthentication(nil, error)
             }
             
             guard (error == nil) else {
@@ -43,7 +40,7 @@ class UdacityClient: NSObject {
             }
             
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx!")
+                sendError("The credentials you entered were incorrect.")
                 return
             }
             
@@ -68,7 +65,7 @@ class UdacityClient: NSObject {
                     completionHandlerForUdacityAuthentication(key, nil)
                 }
             } else {
-                completionHandlerForUdacityAuthentication(nil, error as? NSError)
+                completionHandlerForUdacityAuthentication(nil, error as! String?)
             }
         }
         
@@ -78,7 +75,7 @@ class UdacityClient: NSObject {
         return task
     }
     
-    func logoutWithUdacity(completionHandlerForLogoutWithUdacity: @escaping (_ id: String?, _ expiration: String?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func logoutWithUdacity(completionHandlerForLogoutWithUdacity: @escaping (_ id: String?, _ expiration: String?, _ error: String?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(withMethod: Constants.Methods.session, withPathExtension: nil))
         request.httpMethod = Constants.HTTPMethods.delete
@@ -94,12 +91,9 @@ class UdacityClient: NSObject {
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            print(request)
-            
             func sendError(_ error: String) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForLogoutWithUdacity(nil, nil, NSError(domain: "logOutWithUdacity", code: 1, userInfo: userInfo))
+                completionHandlerForLogoutWithUdacity(nil, nil, error)
             }
             
             guard (error == nil) else {
@@ -133,7 +127,7 @@ class UdacityClient: NSObject {
                     completionHandlerForLogoutWithUdacity(id, expiration, nil)
                 }
             } else {
-                completionHandlerForLogoutWithUdacity(nil, nil, error as? NSError)
+                completionHandlerForLogoutWithUdacity(nil, nil, error as! String?)
             }
         }
         
@@ -143,18 +137,15 @@ class UdacityClient: NSObject {
         return task
     }
     
-    func getStudentData(accountKey: String, completionHandlerForGetStudentData: @escaping (_ student: StudentInfo?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func getStudentData(accountKey: String, completionHandlerForGetStudentData: @escaping (_ student: StudentInfo?, _ error: String?) -> Void) -> URLSessionDataTask {
         
         let request = NSMutableURLRequest(url: udacityURLFromParameters(withMethod: Constants.Methods.users, withPathExtension: "/\(accountKey)"))
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            print(request)
-            
             func sendError(_ error: String) {
                 print(error)
-                let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForGetStudentData(nil, NSError(domain: "getStudentData", code: 1, userInfo: userInfo))
+                completionHandlerForGetStudentData(nil, error)
             }
             
             guard (error == nil) else {
@@ -187,7 +178,7 @@ class UdacityClient: NSObject {
                 if let firstName = studentInfoDictionary[Constants.JSONResponseKeys.first_name] as? String, let lastName = studentInfoDictionary[Constants.JSONResponseKeys.last_name] as? String {
                     completionHandlerForGetStudentData(StudentInfo(accountKey: accountKey, firstName: firstName, lastName: lastName, mediaURL: ""), nil)
                 } else {
-                    completionHandlerForGetStudentData(nil, error as? NSError)
+                    completionHandlerForGetStudentData(nil, error as! String?)
                 }
             }
         }

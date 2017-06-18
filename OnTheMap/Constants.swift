@@ -53,6 +53,7 @@ struct Constants {
     
     struct ParamterValues {
         static let hundred = 100
+        static let updatedAt = "-updatedAt"
     }
     
     struct JSONResponseKeys {

@@ -15,6 +15,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var studentModel = StudentModel.sharedInstance
     var parseClient = ParseClient.sharedInstance()
+    var udacityClient = UdacityClient.sharedInstance()
     
     override func viewDidLoad() {
         self.tableView.reloadData()
@@ -61,11 +62,29 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     @IBAction func refresh(_ sender: Any) {
+        parseClient.getMutlipleStudentLocations() { (studentLocations, error) in
+            DispatchQueue.main.async {
+                if let studentLocations = studentLocations {
+                    for student in studentLocations {
+                        self.studentModel.studentsArray.append(student)
+                    }
+                }
+            }
+        }
+        
         self.tableView.reloadData()
     }
 
-    
     @IBAction func logout(_ sender: Any) {
-    
+            self.udacityClient.logoutWithUdacity() { (id, expiration, error) in
+                DispatchQueue.main.async {
+                if let id = id {
+                    print("success")
+                } else {
+                    print(error)
+                }
+            }
+        }
+        dismiss(animated: true, completion: nil)
     }
 }

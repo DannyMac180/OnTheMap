@@ -9,21 +9,38 @@
 import UIKit
 import MapKit
 
-class CofirmLocationViewController: UIViewController {
+class ConfirmLocationViewController: UIViewController {
     
-    var mapString: String = ""
-    var mediaURL: String = ""
+    var mapString = String()
+    var mediaURL = String()
     var placemark: CLPlacemark? = nil
-    var studentModel = StudentModel.sharedInstance
+    
+    var currentUser = StudentModel.sharedInstance.currentUser
+    var parseClient = ParseClient.sharedInstance()
     
     @IBOutlet weak var mapView: MKMapView!
     
     override func viewDidAppear(_ animated: Bool) {
-        print("Test")
+        super.viewDidAppear(true)
+        self.mapView.showAnnotations([MKPlacemark(placemark: self.placemark!)], animated: true)
     }
 
     @IBAction func finish(_ sender: Any) {
-    
+        parseClient.postStudentLocation(uniqueKey: (currentUser?.accountKey)!, firstName: (currentUser?.firstName)!, lastName: (currentUser?.lastName)!, mapString: self.mapString, mediaUrl: self.mediaURL, latitude: (placemark?.location?.coordinate.latitude)!, longitude: (placemark?.location?.coordinate.longitude)!) { (createdAt, objectId, error) in
+            
+            if let createdAt = createdAt {
+                print("success")
+            } else {
+                self.alertWithError(error: "Unsuccessful in creating location.")
+            }
+        }
+        
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: {})
     }
     
+    func alertWithError(error: String) {
+        let alertView = UIAlertController(title: "Alert", message: error, preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        self.present(alertView, animated: true, completion: nil)
+    }
 }

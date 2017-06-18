@@ -46,7 +46,6 @@
                                         </state>
                                         <connections>
                                             <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mjl-C5-A3Q"/>
-                                            <segue destination="g4H-XY-7YU" kind="show" identifier="loginSegue" id="LYH-ae-bnI"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -97,6 +96,7 @@
                         <outlet property="loginButton" destination="unO-6j-ZJ3" id="sib-Ku-BPB"/>
                         <outlet property="passwordTextfield" destination="bET-GY-XZy" id="KLN-4y-xfS"/>
                         <outlet property="stackView" destination="qjo-F6-K2l" id="4gq-lh-IVQ"/>
+                        <segue destination="g4H-XY-7YU" kind="show" identifier="loginSegue" id="I1B-hS-5lL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -157,7 +157,12 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="On the Map" id="Bih-5O-1Vl">
-                                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="Mu1-l6-ZPo"/>
+                                        <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="Mu1-l6-ZPo">
+                                            <connections>
+                                                <action selector="logout:" destination="zjH-dU-J6G" id="mwb-4D-af4"/>
+                                                <segue destination="BYZ-38-t0r" kind="show" identifier="logoutSegue" id="7IM-z4-vEm"/>
+                                            </connections>
+                                        </barButtonItem>
                                         <rightBarButtonItems>
                                             <barButtonItem systemItem="add" id="cvR-29-Uw7">
                                                 <connections>
@@ -222,12 +227,14 @@
                                         <barButtonItem key="leftBarButtonItem" title="LOGOUT" id="XMI-Sl-t4p">
                                             <connections>
                                                 <action selector="logout:" destination="ECw-md-V4N" id="MgX-O6-YTf"/>
+                                                <segue destination="BYZ-38-t0r" kind="show" identifier="logoutSegue" id="Id0-G8-d4y"/>
                                             </connections>
                                         </barButtonItem>
                                         <rightBarButtonItems>
                                             <barButtonItem image="icon_addpin" id="bra-M3-mep">
                                                 <connections>
                                                     <action selector="addPin:" destination="ECw-md-V4N" id="ju6-tz-T0M"/>
+                                                    <segue destination="yB2-fg-gNm" kind="show" id="gfF-h6-SDf"/>
                                                 </connections>
                                             </barButtonItem>
                                             <barButtonItem image="icon_refresh" id="tWJ-Ac-qcG">
@@ -244,13 +251,9 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="lAz-ak-plD" secondAttribute="trailing" id="337-f5-DVf"/>
                             <constraint firstItem="qlR-kf-3FX" firstAttribute="top" secondItem="lAz-ak-plD" secondAttribute="bottom" id="7nG-w1-3qQ"/>
-                            <constraint firstItem="qlR-kf-3FX" firstAttribute="top" secondItem="qzz-eZ-jCG" secondAttribute="bottom" constant="554" id="CP1-Ri-bwc"/>
                             <constraint firstItem="lAz-ak-plD" firstAttribute="leading" secondItem="xYx-AF-0le" secondAttribute="leading" id="Ebw-Fe-ahE"/>
-                            <constraint firstItem="lAz-ak-plD" firstAttribute="top" secondItem="6TF-tr-qFs" secondAttribute="bottom" id="G4N-M4-wfZ"/>
-                            <constraint firstItem="qlR-kf-3FX" firstAttribute="top" secondItem="qzz-eZ-jCG" secondAttribute="bottom" constant="554" id="LHp-Jb-RFy"/>
                             <constraint firstAttribute="trailing" secondItem="lAz-ak-plD" secondAttribute="trailing" id="LZI-a1-aZY"/>
                             <constraint firstItem="qzz-eZ-jCG" firstAttribute="top" secondItem="6TF-tr-qFs" secondAttribute="bottom" id="QkS-Ar-1nY"/>
-                            <constraint firstItem="lAz-ak-plD" firstAttribute="top" secondItem="qzz-eZ-jCG" secondAttribute="bottom" constant="-44" id="VxC-sY-LJx"/>
                             <constraint firstItem="lAz-ak-plD" firstAttribute="leading" secondItem="xYx-AF-0le" secondAttribute="leading" id="htI-U0-N1g"/>
                             <constraint firstAttribute="trailing" secondItem="lAz-ak-plD" secondAttribute="trailing" id="kAW-Uj-HPi"/>
                             <constraint firstItem="qzz-eZ-jCG" firstAttribute="trailing" secondItem="lAz-ak-plD" secondAttribute="trailing" id="m6x-ky-vf9"/>
@@ -283,17 +286,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="2bZ-ha-3fn">
-                                <rect key="frame" x="156" y="150" width="62" height="62"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="icon_world" translatesAutoresizingMaskIntoConstraints="NO" id="2bZ-ha-3fn">
+                                <rect key="frame" x="156" y="149" width="62" height="63"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="245" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Iy-XD-ZL3">
-                                <rect key="frame" x="71" y="234" width="233" height="30.5"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="245" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Location" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Iy-XD-ZL3">
+                                <rect key="frame" x="71" y="235" width="233" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwb-Da-Q0u">
-                                <rect key="frame" x="71" y="337" width="233" height="30.5"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwb-Da-Q0u">
+                                <rect key="frame" x="71" y="337.5" width="233" height="30"/>
                                 <color key="backgroundColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
                                 <state key="normal" title="Find Location">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -301,7 +304,6 @@
                                 <connections>
                                     <action selector="findLocation:" destination="yB2-fg-gNm" eventType="touchUpInside" id="dZM-0T-qZq"/>
                                     <action selector="loginPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hcT-OC-QNe"/>
-                                    <segue destination="kOh-4y-x4i" kind="show" identifier="findLocationSegue" id="t4j-UG-aLq"/>
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TAO-Dm-Gky">
@@ -312,17 +314,22 @@
                                         <barButtonItem key="leftBarButtonItem" title="CANCEL" id="gNL-PO-LYB">
                                             <connections>
                                                 <action selector="cancel:" destination="yB2-fg-gNm" id="OaP-Ao-Qp7"/>
+                                                <segue destination="g4H-XY-7YU" kind="show" identifier="cancel" id="3Y7-bK-xFs"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Website" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UbY-kS-5cf">
-                                <rect key="frame" x="71" y="285" width="233" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a Website" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UbY-kS-5cf">
+                                <rect key="frame" x="71" y="285.5" width="233" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Xl1-bO-2Zo">
+                                <rect key="frame" x="177" y="430" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -345,18 +352,20 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="Xl1-bO-2Zo" id="Qsp-sX-g3d"/>
                         <outlet property="enterLocationTextField" destination="0Iy-XD-ZL3" id="R8a-Ko-qxw"/>
                         <outlet property="enterWebsiteTextField" destination="UbY-kS-5cf" id="aEn-xr-ulk"/>
+                        <segue destination="kOh-4y-x4i" kind="show" identifier="FindLocationSegue" id="lU4-LK-HSE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GX2-7J-yhc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2613.5999999999999" y="131.78410794602701"/>
         </scene>
-        <!--Cofirm Location View Controller-->
+        <!--ConfirmLocationViewController-->
         <scene sceneID="GPV-Ju-NxA">
             <objects>
-                <viewController id="kOh-4y-x4i" customClass="CofirmLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="kOh-4y-x4i" userLabel="ConfirmLocationViewController" customClass="ConfirmLocationViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pID-OI-ghF"/>
                         <viewControllerLayoutGuide type="bottom" id="JO7-rf-9FU"/>
@@ -374,9 +383,7 @@
                                     <navigationItem title="Confirm Location" id="cxf-kw-Hzx">
                                         <barButtonItem key="leftBarButtonItem" image="icon_back-arrow" id="fS2-Hz-qIg">
                                             <connections>
-                                                <segue destination="yB2-fg-gNm" kind="popoverPresentation" popoverAnchorBarButtonItem="fS2-Hz-qIg" id="kDb-te-at6">
-                                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                                </segue>
+                                                <segue destination="yB2-fg-gNm" kind="show" id="FZ3-jh-dMe"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -412,11 +419,12 @@
                     </view>
                     <connections>
                         <outlet property="mapView" destination="Ifz-kg-aBT" id="b3h-pz-KR0"/>
+                        <segue destination="g4H-XY-7YU" kind="show" identifier="presentTabBar" id="ku8-xW-7g2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PyW-Lk-KB2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3317.5999999999999" y="131.78410794602701"/>
+            <point key="canvasLocation" x="3588" y="132"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="zRZ-cK-lo7">
@@ -448,6 +456,8 @@
         <image name="logo-u" width="62" height="62"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="kDb-te-at6"/>
+        <segue reference="Id0-G8-d4y"/>
+        <segue reference="3Y7-bK-xFs"/>
+        <segue reference="gfF-h6-SDf"/>
     </inferredMetricsTieBreakers>
 </document>

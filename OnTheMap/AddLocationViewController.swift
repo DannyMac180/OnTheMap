@@ -13,12 +13,26 @@ class AddLocationViewController: UIViewController {
     
     @IBOutlet weak var enterLocationTextField: UITextField!
     @IBOutlet weak var enterWebsiteTextField: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
     
     var placemark: CLPlacemark? = nil
-    var mapString: String = ""
-    var mediaURL: String = ""
+    var mediaURL = String()
+    var mapString = String()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        activityIndicator.isHidden = true
+        
+        enterLocationTextField.delegate = self
+        enterWebsiteTextField.delegate = self
+    }
     
     @IBAction func findLocation(_ sender: Any) {
+        
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         
         if (enterLocationTextField.text?.isEmpty)! {
             showAlert(message: "Please enter a location.")
@@ -31,26 +45,34 @@ class AddLocationViewController: UIViewController {
         }
         
         let geoCoder = CLGeocoder()
+        
         geoCoder.geocodeAddressString(enterLocationTextField.text!) { (placemarkArr, error) in
             
             if let _ = error {
                 self.showAlert(message: "Could not gecode the given location.")
+                self.activityIndicator.isHidden = true
             } else if (placemarkArr?.isEmpty)! {
                 self.showAlert(message: "Location not found.")
+                self.activityIndicator.isHidden = true
             } else {
                 self.placemark = placemarkArr?.first
                 self.mediaURL = self.enterWebsiteTextField.text!
-                self.mapString = self.enterWebsiteTextField.text!
+                self.mapString = self.enterLocationTextField.text!
                 
-                func prepare(for segue: UIStoryboardSegue, sender: AnyObject) {
-                    if segue.identifier == "findLocationSegue" {
-                        let destination = segue.destination as! CofirmLocationViewController
-                        destination.placemark = self.placemark
-                        destination.mediaURL = self.mediaURL
-                        destination.mapString = self.mapString
-                    }
-                }
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.isHidden = true
+                
+                self.performSegue(withIdentifier: "FindLocationSegue", sender: self)
             }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "FindLocationSegue" {
+            let destination = segue.destination as! ConfirmLocationViewController
+            destination.placemark = placemark
+            destination.mediaURL = mediaURL
+            destination.mapString = mapString
         }
     }
     
@@ -64,5 +86,13 @@ class AddLocationViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: completionClosure))
             self.present(alert, animated: true, completion: nil)
         }
+    }
+}
+
+extension AddLocationViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

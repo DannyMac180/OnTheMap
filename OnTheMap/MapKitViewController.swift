@@ -14,13 +14,18 @@ class MapKitViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
 
     var annotations = [MKPointAnnotation]()
+    var parseClient = ParseClient.sharedInstance()
+    var udacityClient = UdacityClient.sharedInstance()
+    var studentModel = StudentModel.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
         mapView.delegate = self
         var studentLocations = StudentModel.sharedInstance.studentsArray
         
@@ -43,7 +48,9 @@ class MapKitViewController: UIViewController, MKMapViewDelegate {
             annotations.append(annotation)
         }
         
+        DispatchQueue.main.async {
             self.mapView.addAnnotations(self.annotations)
+        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -74,15 +81,35 @@ class MapKitViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    @IBAction func addPin(_ sender: Any) {
-    
-    }
-    
     @IBAction func refresh(_ sender: Any) {
-    
+        parseClient.getMutlipleStudentLocations() { (studentLocations, error) in
+            DispatchQueue.main.async {
+                if let studentLocations = studentLocations {
+                    for student in studentLocations {
+                        self.studentModel.studentsArray.append(student)
+                    }
+                } else {
+                    self.alertWithError(error: "The download failed.")
+                }
+            }
+        }
     }
     
     @IBAction func logout(_ sender: Any) {
+        udacityClient.logoutWithUdacity() { (id, expiration, error) in
+            if let expiration = expiration {
+                print("success")
+            } else {
+                print(error)
+            }
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
     
+    func alertWithError(error: String) {
+        let alertView = UIAlertController(title: "Alert", message: error, preferredStyle: .alert)
+        alertView.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        self.present(alertView, animated: true, completion: nil)
     }
 }

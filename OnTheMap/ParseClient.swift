@@ -36,8 +36,6 @@ class ParseClient: NSObject {
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            print(request)
-            
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey : error]
@@ -72,7 +70,7 @@ class ParseClient: NSObject {
     
     func getMutlipleStudentLocations(_ completionHandlerForMultipleStudentLocations: @escaping (_ studentLocations: [StudentLocation]?, _ error: NSError?) -> Void) {
         
-        let parameters = [Constants.ParameterKeys.limit: Constants.ParamterValues.hundred]
+        let parameters = [Constants.ParameterKeys.limit: Constants.ParamterValues.hundred, Constants.ParameterKeys.order: Constants.ParamterValues.updatedAt] as [String : Any]
         
         let _ = taskForParseRequest(requestType: Constants.HTTPMethods.get, optionalParameters: parameters as [String : AnyObject], pathExtension: nil, addContentType: false, httpBody: nil)  { (result, error) in
             

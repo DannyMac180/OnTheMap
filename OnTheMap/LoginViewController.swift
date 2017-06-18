@@ -56,26 +56,24 @@ class LoginViewController: UIViewController {
                                     self.studentModel.currentUser = StudentInfo(accountKey: student.accountKey, firstName: student.firstName, lastName: student.lastName, mediaURL: student.mediaURL)
                                     self.performSegue(withIdentifier: Constants.Identifiers.loginSegue, sender: self)
                                 } else {
-                                    self.alertWithError(error: error as! String)
+                                    self.alertWithError(error: error!)
                                 }
                             }
                         }
                     } else {
-                        self.alertWithError(error: error as! String)
+                        self.alertWithError(error: error!)
                     }
                 }
             }
         }
         
         parseClient.getMutlipleStudentLocations() { (studentLocations, error) in
-            DispatchQueue.main.async {
-                if let studentLocations = studentLocations {
-                    for student in studentLocations {
-                        self.studentModel.studentsArray.append(student)
-                    }
-                } else {
-                    self.alertWithError(error: String(describing: error))
+            if let studentLocations = studentLocations {
+                for student in studentLocations {
+                    self.studentModel.studentsArray.append(student)
                 }
+            } else {
+                self.alertWithError(error: String(describing: error))
             }
         }
     }
@@ -114,10 +112,10 @@ class LoginViewController: UIViewController {
     private func throwError() {
         if emailTextfield.text!.isEmpty {
             animateOnError(textField: emailTextfield)
-            errorLabel.text = "Username is empty"
+            errorLabel.text = "Username field is empty"
         } else {
             animateOnError(textField: passwordTextfield)
-            errorLabel.text = "Password is empty"
+            errorLabel.text = "Password field is empty"
         }
     }
     
@@ -136,7 +134,7 @@ class LoginViewController: UIViewController {
     
     func alertWithError(error: String) {
         setupViews(.Normal)
-        let alertView = UIAlertController(title: "LoginAlertTitle", message: error, preferredStyle: .alert)
+        let alertView = UIAlertController(title: "Login Alert", message: error, preferredStyle: .alert)
         alertView.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         self.present(alertView, animated: true, completion: nil)
     }
