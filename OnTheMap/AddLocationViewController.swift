@@ -23,7 +23,7 @@ class AddLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        activityIndicator.isHidden = true
+        activityIndicator.hidesWhenStopped = true
         
         enterLocationTextField.delegate = self
         enterWebsiteTextField.delegate = self
@@ -31,7 +31,6 @@ class AddLocationViewController: UIViewController {
     
     @IBAction func findLocation(_ sender: Any) {
         
-        activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         
         if (enterLocationTextField.text?.isEmpty)! {

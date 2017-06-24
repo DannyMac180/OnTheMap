@@ -28,14 +28,20 @@ class ConfirmLocationViewController: UIViewController {
     @IBAction func finish(_ sender: Any) {
         parseClient.postStudentLocation(uniqueKey: (currentUser?.accountKey)!, firstName: (currentUser?.firstName)!, lastName: (currentUser?.lastName)!, mapString: self.mapString, mediaUrl: self.mediaURL, latitude: (placemark?.location?.coordinate.latitude)!, longitude: (placemark?.location?.coordinate.longitude)!) { (createdAt, objectId, error) in
             
+            DispatchQueue.main.async {
             if let createdAt = createdAt {
                 print("success")
             } else {
                 self.alertWithError(error: "Unsuccessful in creating location.")
             }
         }
+    }
         
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: {})
+    }
+    
+    @IBAction func backButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
     func alertWithError(error: String) {

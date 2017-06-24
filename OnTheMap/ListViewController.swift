@@ -18,7 +18,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     var udacityClient = UdacityClient.sharedInstance()
     
     override func viewDidLoad() {
-        self.tableView.reloadData()
+        super.viewDidLoad()
+        tableView.reloadData()
     }
     
     override func viewDidLayoutSubviews() {

@@ -15,7 +15,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var emailTextfield: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
@@ -56,24 +55,26 @@ class LoginViewController: UIViewController {
                                     self.studentModel.currentUser = StudentInfo(accountKey: student.accountKey, firstName: student.firstName, lastName: student.lastName, mediaURL: student.mediaURL)
                                     self.performSegue(withIdentifier: Constants.Identifiers.loginSegue, sender: self)
                                 } else {
-                                    self.alertWithError(error: error!)
+                                    self.alertWithError(error: "The internet connection failed.")
                                 }
                             }
                         }
                     } else {
-                        self.alertWithError(error: error!)
+                        self.alertWithError(error: "The login failed.")
                     }
                 }
             }
         }
         
-        parseClient.getMutlipleStudentLocations() { (studentLocations, error) in
-            if let studentLocations = studentLocations {
-                for student in studentLocations {
-                    self.studentModel.studentsArray.append(student)
+        DispatchQueue.main.async {
+            self.parseClient.getMutlipleStudentLocations() { (studentLocations, error) in
+                if let studentLocations = studentLocations {
+                    for student in studentLocations {
+                        self.studentModel.studentsArray.append(student)
+                    }
+                } else {
+                    self.alertWithError(error: String(describing: error))
                 }
-            } else {
-                self.alertWithError(error: String(describing: error))
             }
         }
     }
@@ -92,12 +93,10 @@ class LoginViewController: UIViewController {
             emailTextfield.text = ""
             passwordTextfield.text = ""
             activityIndicator.stopAnimating()
-            stackView.alpha = 1.0
             
         case .Login:
             setEnabled(enabled: false)
             activityIndicator.startAnimating()
-            stackView.alpha = 0.5
             errorLabel.text = ""
         }
     }
@@ -126,9 +125,6 @@ class LoginViewController: UIViewController {
             animate.duration = 0.1
             animate.repeatCount = 2
             animate.autoreverses = true
-            animate.fromValue = NSValue(cgPoint: CGPoint(x: self.stackView.center.x - 5, y: self.stackView.center.y))
-            animate.toValue = NSValue(cgPoint: CGPoint(x: self.stackView.center.x + 5, y: self.stackView.center.y))
-            self.stackView.layer.add(animate, forKey: "shake")
         }
     }
     
