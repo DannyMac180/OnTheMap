@@ -27,6 +27,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews(.Initialize)
+        activityIndicator.hidesWhenStopped = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,6 +40,17 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginPressed(_ sender: Any) {
         
+            self.parseClient.getMutlipleStudentLocations() { (studentLocations, error) in
+                if let studentLocations = studentLocations {
+                    for student in studentLocations {
+                        self.studentModel.studentsArray.append(student)
+                    }
+                } else {
+                    self.alertWithError(error: String(describing: "The internet connection failed."))
+                    self.setupViews(.Normal)
+                }
+            }
+        
         if emailTextfield.text!.isEmpty || passwordTextfield.text!.isEmpty {
             throwError()
         } else {
@@ -50,30 +62,16 @@ class LoginViewController: UIViewController {
                 DispatchQueue.main.async {
                     if let key = key {
                         self.udacityClient.getStudentData(accountKey: key) { (student, error) in
-                            DispatchQueue.main.async {
-                                if let student = student {
-                                    self.studentModel.currentUser = StudentInfo(accountKey: student.accountKey, firstName: student.firstName, lastName: student.lastName, mediaURL: student.mediaURL)
-                                    self.performSegue(withIdentifier: Constants.Identifiers.loginSegue, sender: self)
-                                } else {
-                                    self.alertWithError(error: "The internet connection failed.")
-                                }
+                            if let student = student {
+                                self.studentModel.currentUser = StudentInfo(accountKey: student.accountKey, firstName: student.firstName, lastName: student.lastName, mediaURL: student.mediaURL)
+                                self.performSegue(withIdentifier: Constants.Identifiers.loginSegue, sender: self)
+                            } else {
+                                self.alertWithError(error: "The connection to the server failed.")
                             }
                         }
                     } else {
-                        self.alertWithError(error: "The login failed.")
+                        self.alertWithError(error: "The credentials entered were incorrect.")
                     }
-                }
-            }
-        }
-        
-        DispatchQueue.main.async {
-            self.parseClient.getMutlipleStudentLocations() { (studentLocations, error) in
-                if let studentLocations = studentLocations {
-                    for student in studentLocations {
-                        self.studentModel.studentsArray.append(student)
-                    }
-                } else {
-                    self.alertWithError(error: String(describing: error))
                 }
             }
         }
